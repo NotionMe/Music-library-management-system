@@ -1,6 +1,6 @@
 package ua.notion.musiclibrary.domain;
 
-import ua.notion.musiclibrary.utils.EntityValidationException;
+import ua.notion.musiclibrary.domain.exception.EntityValidationException;
 import ua.notion.musiclibrary.utils.ValidationError;
 
 public class Genre extends BaseEntity {

@@ -1,4 +1,4 @@
-package ua.notion.musiclibrary.utils;
+package ua.notion.musiclibrary.domain.exception;
 
 import java.util.List;
 import java.util.Map;

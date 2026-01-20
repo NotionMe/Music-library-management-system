@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-import ua.notion.musiclibrary.utils.EntityValidationException;
+import ua.notion.musiclibrary.domain.exception.EntityValidationException;
 import ua.notion.musiclibrary.utils.ValidationError;
 
 public class Playlist extends BaseEntity {

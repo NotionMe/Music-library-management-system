@@ -3,7 +3,7 @@ package ua.notion.musiclibrary.domain;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import ua.notion.musiclibrary.utils.EntityValidationException;
+import ua.notion.musiclibrary.domain.exception.EntityValidationException;
 import ua.notion.musiclibrary.utils.ValidationError;
 
 public class Album extends BaseEntity {
