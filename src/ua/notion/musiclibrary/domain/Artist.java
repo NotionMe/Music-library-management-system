@@ -5,9 +5,6 @@ import ua.notion.musiclibrary.utils.ValidationError;
 
 public class Artist extends BaseEntity {
 
-  private static final String STAGE_NAME = "stageName";
-  private static final String BIO = "bio";
-
   private String stageName;
   private String bio;
 
@@ -30,14 +27,14 @@ public class Artist extends BaseEntity {
   }
 
   public void setStageName(String stageName) {
-    clearError(STAGE_NAME);
+    clearError(DomainFieldNames.Artist.STAGE_NAME);
 
     if (stageName == null || stageName.trim().isEmpty()) {
-      addError(STAGE_NAME, ValidationError.EMPTY_ARTIST.getMessage());
+      addError(DomainFieldNames.Artist.STAGE_NAME, ValidationError.EMPTY_ARTIST.getMessage());
     }
 
     if (stageName.length() < 1 || stageName.length() > 50) {
-      addError(STAGE_NAME, ValidationError.INVALID_ARTIST_LENGTH.getMessage());
+      addError(DomainFieldNames.Artist.STAGE_NAME, ValidationError.INVALID_ARTIST_LENGTH.getMessage());
     }
 
     this.stageName = stageName;
@@ -48,14 +45,14 @@ public class Artist extends BaseEntity {
   }
 
   public void setBio(String bio) {
-    clearError(BIO);
+    clearError(DomainFieldNames.Artist.BIO);
 
     if (bio == null || bio.trim().isEmpty()) {
-      addError(BIO, "Біографія не може бути пустою!");
+      addError(DomainFieldNames.Artist.BIO, ValidationError.EMPTY_BIO.getMessage());
     }
 
     if (bio.length() > 500) {
-      addError(BIO, "Біографія не може бути більше 500 символів!");
+      addError(DomainFieldNames.Artist.BIO, ValidationError.INVALID_BIO_LENGTH.getMessage());
     }
 
     this.bio = bio;

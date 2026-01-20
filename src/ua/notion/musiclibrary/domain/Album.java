@@ -1,14 +1,12 @@
 package ua.notion.musiclibrary.domain;
 
-import ua.notion.musiclibrary.utils.EntityValidationException;
-import ua.notion.musiclibrary.utils.ValidationError;
 import java.time.LocalDate;
 import java.util.UUID;
 
-public class Album extends BaseEntity {
+import ua.notion.musiclibrary.utils.EntityValidationException;
+import ua.notion.musiclibrary.utils.ValidationError;
 
-  private static final String TITLE = "title";
-  private static final String RELEASE_DATE = "releaseDate";
+public class Album extends BaseEntity {
 
   private String title;
   private LocalDate releaseDate;
@@ -34,14 +32,14 @@ public class Album extends BaseEntity {
   }
 
   public void setTitle(String title) {
-    clearError(TITLE);
+    clearError(DomainFieldNames.Common.TITLE);
 
     if (title == null || title.trim().isEmpty()) {
-      addError(TITLE, ValidationError.EMPTY_TITLE.getMessage());
+      addError(DomainFieldNames.Common.TITLE, ValidationError.EMPTY_TITLE.getMessage());
     }
 
     if (title.length() < 1 || title.length() > 100) {
-      addError(TITLE, ValidationError.INVALID_TITLE_LENGTH.getMessage());
+      addError(DomainFieldNames.Common.TITLE, ValidationError.INVALID_TITLE_LENGTH.getMessage());
     }
 
     this.title = title;
@@ -52,14 +50,14 @@ public class Album extends BaseEntity {
   }
 
   public void setReleaseDate(LocalDate releaseDate) {
-    clearError(RELEASE_DATE);
+    clearError(DomainFieldNames.Album.RELEASE_DATE);
 
     if (releaseDate == null) {
-      addError(RELEASE_DATE, "Дата релізу не може бути пустою!");
+      addError(DomainFieldNames.Album.RELEASE_DATE, ValidationError.EMPTY_RELEASE_DATE.getMessage());
     }
 
     if (releaseDate.isAfter(LocalDate.now())) {
-      addError(RELEASE_DATE, "Дата релізу не може бути в майбутньому!");
+      addError(DomainFieldNames.Album.RELEASE_DATE, ValidationError.INVALID_RELEASE_DATE_IN_FUTURE.getMessage());
     }
 
     this.releaseDate = releaseDate;
@@ -71,7 +69,7 @@ public class Album extends BaseEntity {
 
   public void setArtistId(UUID artistId) {
     if (artistId == null) {
-      addError("artistId", "ID виконавця не може бути пустим!");
+      addError(DomainFieldNames.Common.ARTIST_ID, ValidationError.EMPTY_ARTIST_ID.getMessage());
     }
 
     this.artistId = artistId;

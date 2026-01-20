@@ -6,25 +6,29 @@ import java.util.UUID;
 import ua.notion.musiclibrary.utils.EntityValidationException;
 import ua.notion.musiclibrary.utils.ValidationError;
 
-public class ListeningHistory extends BaseEntity {
+public class Favorite extends BaseEntity {
 
   private UUID userId;
   private UUID trackId;
-  private LocalDateTime playedAt;
+  private LocalDateTime addedAt;
 
-  private ListeningHistory() {
+  private Favorite() {
     super();
   }
 
-  public ListeningHistory(UUID userId, UUID trackId, LocalDateTime playedAt) {
+  public Favorite(UUID userId, UUID trackId, LocalDateTime addedAt) {
     this();
     setUserId(userId);
     setTrackId(trackId);
-    setPlayedAt(playedAt);
+    setAddedAt(addedAt);
 
     if (!isValid()) {
       throw new EntityValidationException(getErrors());
     }
+  }
+
+  public Favorite(UUID userId, UUID trackId) {
+    this(userId, trackId, LocalDateTime.now());
   }
 
   public UUID getUserId() {
@@ -51,24 +55,24 @@ public class ListeningHistory extends BaseEntity {
     this.trackId = trackId;
   }
 
-  public LocalDateTime getPlayedAt() {
-    return playedAt;
+  public LocalDateTime getAddedAt() {
+    return addedAt;
   }
 
-  public void setPlayedAt(LocalDateTime playedAt) {
-    if (playedAt == null) {
-      addError(DomainFieldNames.ListeningHistory.PLAYED_AT, ValidationError.EMPTY_PLAYED_AT.getMessage());
+  public void setAddedAt(LocalDateTime addedAt) {
+    if (addedAt == null) {
+      addError(DomainFieldNames.Favorite.ADDED_AT, ValidationError.EMPTY_ADDED_AT.getMessage());
     }
 
-    if (playedAt.isAfter(LocalDateTime.now())) {
-      addError(DomainFieldNames.ListeningHistory.PLAYED_AT, ValidationError.INVALID_PLAYED_AT_IN_FUTURE.getMessage());
+    if (addedAt.isAfter(LocalDateTime.now())) {
+      addError(DomainFieldNames.Favorite.ADDED_AT, ValidationError.INVALID_ADDED_AT_IN_FUTURE.getMessage());
     }
 
-    this.playedAt = playedAt;
+    this.addedAt = addedAt;
   }
 
   @Override
   public String toString() {
-    return "ListeningHistory [userId=" + userId + ", trackId=" + trackId + ", playedAt=" + playedAt + "]";
+    return "Favorite [userId=" + userId + ", trackId=" + trackId + ", addedAt=" + addedAt + "]";
   }
 }

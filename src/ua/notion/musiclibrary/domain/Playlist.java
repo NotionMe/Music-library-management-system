@@ -1,14 +1,13 @@
 package ua.notion.musiclibrary.domain;
 
-import ua.notion.musiclibrary.utils.EntityValidationException;
-import ua.notion.musiclibrary.utils.ValidationError;
-import java.util.Set;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
-public class Playlist extends BaseEntity {
+import ua.notion.musiclibrary.utils.EntityValidationException;
+import ua.notion.musiclibrary.utils.ValidationError;
 
-  private static final String NAME = "name";
+public class Playlist extends BaseEntity {
 
   private String name;
   private boolean isPrivate;
@@ -36,14 +35,14 @@ public class Playlist extends BaseEntity {
   }
 
   public void setName(String name) {
-    clearError(NAME);
+    clearError(DomainFieldNames.Common.NAME);
 
     if (name == null || name.trim().isEmpty()) {
-      addError(NAME, ValidationError.EMPTY_TITLE.getMessage());
+      addError(DomainFieldNames.Common.NAME, ValidationError.EMPTY_TITLE.getMessage());
     }
 
     if (name.length() < 1 || name.length() > 100) {
-      addError(NAME, ValidationError.INVALID_TITLE_LENGTH.getMessage());
+      addError(DomainFieldNames.Common.NAME, ValidationError.INVALID_TITLE_LENGTH.getMessage());
     }
 
     this.name = name;
@@ -63,7 +62,7 @@ public class Playlist extends BaseEntity {
 
   public void setUserId(UUID userId) {
     if (userId == null) {
-      addError("userId", "ID користувача не може бути пустим!");
+      addError(DomainFieldNames.Common.USER_ID, ValidationError.EMPTY_USER_ID.getMessage());
     }
 
     this.userId = userId;

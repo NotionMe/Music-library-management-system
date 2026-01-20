@@ -5,8 +5,6 @@ import ua.notion.musiclibrary.utils.ValidationError;
 
 public class Genre extends BaseEntity {
 
-  private static final String NAME = "name";
-
   private String name;
 
   private Genre() {
@@ -27,14 +25,14 @@ public class Genre extends BaseEntity {
   }
 
   public void setName(String name) {
-    clearError(NAME);
+    clearError(DomainFieldNames.Genre.GENRE_NAME);
 
     if (name == null || name.trim().isEmpty()) {
-      addError(NAME, ValidationError.EMPTY_GENRE.getMessage());
+      addError(DomainFieldNames.Genre.GENRE_NAME, ValidationError.EMPTY_GENRE.getMessage());
     }
 
     if (name.length() < 1 || name.length() > 30) {
-      addError(NAME, ValidationError.INVALID_GENRE_LENGTH.getMessage());
+      addError(DomainFieldNames.Genre.GENRE_NAME, ValidationError.INVALID_GENRE_LENGTH.getMessage());
     }
 
     this.name = name;

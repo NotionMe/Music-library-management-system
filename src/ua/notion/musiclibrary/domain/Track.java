@@ -1,14 +1,12 @@
 package ua.notion.musiclibrary.domain;
 
-import ua.notion.musiclibrary.utils.EntityValidationException;
-import ua.notion.musiclibrary.utils.ValidationError;
 import java.time.Duration;
 import java.util.UUID;
 
-public class Track extends BaseEntity {
+import ua.notion.musiclibrary.utils.EntityValidationException;
+import ua.notion.musiclibrary.utils.ValidationError;
 
-  private static final String TITLE = "title";
-  private static final String DURATION = "duration";
+public class Track extends BaseEntity {
 
   private String title;
   private Duration duration;
@@ -36,14 +34,14 @@ public class Track extends BaseEntity {
   }
 
   public void setTitle(String title) {
-    clearError(TITLE);
+    clearError(DomainFieldNames.Common.TITLE);
 
     if (title == null || title.trim().isEmpty()) {
-      addError(TITLE, ValidationError.EMPTY_TITLE.getMessage());
+      addError(DomainFieldNames.Common.TITLE, ValidationError.EMPTY_TITLE.getMessage());
     }
 
     if (title.length() < 1 || title.length() > 100) {
-      addError(TITLE, ValidationError.INVALID_TITLE_LENGTH.getMessage());
+      addError(DomainFieldNames.Common.TITLE, ValidationError.INVALID_TITLE_LENGTH.getMessage());
     }
 
     this.title = title;
@@ -54,14 +52,14 @@ public class Track extends BaseEntity {
   }
 
   public void setDuration(Duration duration) {
-    clearError(DURATION);
+    clearError(DomainFieldNames.Track.DURATION);
 
     if (duration == null) {
-      addError(DURATION, ValidationError.EMPTY_DURATION.getMessage());
+      addError(DomainFieldNames.Track.DURATION, ValidationError.EMPTY_DURATION.getMessage());
     }
 
     if (duration.isZero() || duration.isNegative()) {
-      addError(DURATION, ValidationError.INVALID_DURATION_FORMAT.getMessage());
+      addError(DomainFieldNames.Track.DURATION, ValidationError.INVALID_DURATION_FORMAT.getMessage());
     }
 
     this.duration = duration;
@@ -73,7 +71,7 @@ public class Track extends BaseEntity {
 
   public void setAlbumId(UUID albumId) {
     if (albumId == null) {
-      addError("albumId", "ID альбому не може бути пустим!");
+      addError(DomainFieldNames.Common.ALBUM_ID, ValidationError.EMPTY_ALBUM_ID.getMessage());
     }
 
     this.albumId = albumId;
@@ -85,7 +83,7 @@ public class Track extends BaseEntity {
 
   public void setGenreId(UUID genreId) {
     if (genreId == null) {
-      addError("genreId", "ID жанру не може бути пустим!");
+      addError(DomainFieldNames.Common.GENRE_ID, ValidationError.EMPTY_GENRE_ID.getMessage());
     }
 
     this.genreId = genreId;
