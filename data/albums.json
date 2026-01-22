@@ -1,13 +1,68 @@
 [
   {
-    "title": "Abbey Road",
+    "title": "Stage And Screen Album B000CPJHQG",
     "releaseDate": {
-      "year": 1969,
+      "year": 2019,
       "month": 9,
+      "day": 23
+    },
+    "artistId": "5126d334-c374-4f2e-8dad-6df03373d3e7",
+    "id": "70eafce8-0250-4484-b338-082468df9c21",
+    "errors": {}
+  },
+  {
+    "title": "Rock Album B000J1E1RS",
+    "releaseDate": {
+      "year": 2019,
+      "month": 3,
+      "day": 13
+    },
+    "artistId": "5126d334-c374-4f2e-8dad-6df03373d3e7",
+    "id": "8618908d-c492-4ba3-b035-172519f8f6c6",
+    "errors": {}
+  },
+  {
+    "title": "Classical Album B000B7722Q",
+    "releaseDate": {
+      "year": 2017,
+      "month": 4,
       "day": 26
     },
-    "artistId": "19b5046e-746d-4d07-869b-0271e2cb6713",
-    "id": "ddaf75ad-94ec-49b5-a069-ebea0ee997bb",
+    "artistId": "1454af8c-9644-483a-b211-303460b4ecc1",
+    "id": "521ce3bb-218c-4243-b5cd-58692eed6603",
+    "errors": {}
+  },
+  {
+    "title": "Pop Album B0000VG5MG",
+    "releaseDate": {
+      "year": 2021,
+      "month": 10,
+      "day": 4
+    },
+    "artistId": "1454af8c-9644-483a-b211-303460b4ecc1",
+    "id": "caa2fdd8-95bb-471d-aa2f-ac41910a84bd",
+    "errors": {}
+  },
+  {
+    "title": "Stage And Screen Album B0000AJDKF",
+    "releaseDate": {
+      "year": 2025,
+      "month": 9,
+      "day": 13
+    },
+    "artistId": "e008e335-b2c0-42f9-b66c-a357e4261190",
+    "id": "74c98c2a-418a-4fa3-af52-db3d1989f95d",
+    "errors": {}
+  },
+  {
+    "title": "Pop Album B000PGCLWY",
+    "releaseDate": {
+      "year": 2020,
+      "month": 3,
+      "day": 23
+    },
+    "artistId": "e008e335-b2c0-42f9-b66c-a357e4261190",
+    "id": "b98bc042-e935-4eb7-a6a5-3d5c4ef944f3",
     "errors": {}
   }
 ]
