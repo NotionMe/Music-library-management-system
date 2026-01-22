@@ -1,0 +1,13 @@
+[
+  {
+    "title": "Abbey Road",
+    "releaseDate": {
+      "year": 1969,
+      "month": 9,
+      "day": 26
+    },
+    "artistId": "19b5046e-746d-4d07-869b-0271e2cb6713",
+    "id": "ddaf75ad-94ec-49b5-a069-ebea0ee997bb",
+    "errors": {}
+  }
+]

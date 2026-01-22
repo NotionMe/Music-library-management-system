@@ -1,21 +1,26 @@
-package ua.notion.musiclibrary.domain;
+package ua.notion.musiclibrary.domain.model;
+
+import java.util.UUID;
 
 import ua.notion.musiclibrary.domain.exception.EntityValidationException;
+import ua.notion.musiclibrary.utils.DomainFieldNames;
 import ua.notion.musiclibrary.utils.ValidationError;
 
 public class Artist extends BaseEntity {
 
   private String stageName;
   private String bio;
+  private UUID userId;
 
   private Artist() {
     super();
   }
 
-  public Artist(String stageName, String bio) {
+  public Artist(String stageName, String bio, UUID userId) {
     this();
     setStageName(stageName);
     setBio(bio);
+    setUserId(userId);
 
     if (!isValid()) {
       throw new EntityValidationException(getErrors());
@@ -56,6 +61,17 @@ public class Artist extends BaseEntity {
     }
 
     this.bio = bio;
+  }
+
+  public UUID getUserId() {
+    return userId;
+  }
+
+  public void setUserId(UUID userId) {
+    if (userId == null) {
+      addError(DomainFieldNames.Common.USER_ID, ValidationError.EMPTY_USER_ID.getMessage());
+    }
+    this.userId = userId;
   }
 
   @Override

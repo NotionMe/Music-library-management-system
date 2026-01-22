@@ -1,0 +1,46 @@
+[
+  {
+    "title": "Come Together",
+    "duration": {
+      "seconds": 259,
+      "nanos": 0
+    },
+    "albumId": "ddaf75ad-94ec-49b5-a069-ebea0ee997bb",
+    "genreIds": [
+      "ca791442-7288-41e5-86e1-ca4fdc389fc3"
+    ],
+    "artistIds": [
+      "19b5046e-746d-4d07-869b-0271e2cb6713"
+    ],
+    "id": "bc50abe8-556f-4930-a198-995859a140bc",
+    "errors": {}
+  },
+  {
+    "title": "Something",
+    "duration": {
+      "seconds": 180,
+      "nanos": 0
+    },
+    "albumId": "ddaf75ad-94ec-49b5-a069-ebea0ee997bb",
+    "genreIds": [
+      "ca791442-7288-41e5-86e1-ca4fdc389fc3"
+    ],
+    "artistIds": [
+      "19b5046e-746d-4d07-869b-0271e2cb6713"
+    ],
+    "id": "4d2f62a3-6740-4a5c-aa07-4f98782d847b",
+    "errors": {}
+  },
+  {
+    "title": "UoW Track 1 Modified",
+    "duration": {
+      "seconds": 60,
+      "nanos": 0
+    },
+    "albumId": "ddaf75ad-94ec-49b5-a069-ebea0ee997bb",
+    "genreIds": [],
+    "artistIds": [],
+    "id": "704e4e74-53c4-46ec-b279-3c5ce2f123a1",
+    "errors": {}
+  }
+]

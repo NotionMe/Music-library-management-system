@@ -1,4 +1,4 @@
-package ua.notion.musiclibrary.domain;
+package ua.notion.musiclibrary.domain.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;

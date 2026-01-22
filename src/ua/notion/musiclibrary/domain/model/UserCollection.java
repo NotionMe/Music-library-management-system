@@ -1,5 +1,7 @@
-package ua.notion.musiclibrary.domain;
+package ua.notion.musiclibrary.domain.model;
 
+import ua.notion.musiclibrary.utils.DomainFieldNames;
+import static ua.notion.musiclibrary.utils.DomainFieldNames.*;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -38,7 +40,7 @@ public class UserCollection extends BaseEntity {
 
   public void setUserId(UUID userId) {
     if (userId == null) {
-      addError(DomainFieldNames.Common.USER_ID, ValidationError.EMPTY_USER_ID.getMessage());
+      addError(Common.USER_ID, ValidationError.EMPTY_USER_ID.getMessage());
     }
 
     this.userId = userId;

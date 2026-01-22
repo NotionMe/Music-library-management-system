@@ -1,5 +1,7 @@
-package ua.notion.musiclibrary.domain;
+package ua.notion.musiclibrary.domain.model;
 
+import ua.notion.musiclibrary.utils.DomainFieldNames;
+import static ua.notion.musiclibrary.utils.DomainFieldNames.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -33,7 +35,7 @@ public class ListeningHistory extends BaseEntity {
 
   public void setUserId(UUID userId) {
     if (userId == null) {
-      addError(DomainFieldNames.Common.USER_ID, ValidationError.EMPTY_USER_ID.getMessage());
+      addError(Common.USER_ID, ValidationError.EMPTY_USER_ID.getMessage());
     }
 
     this.userId = userId;
@@ -45,7 +47,7 @@ public class ListeningHistory extends BaseEntity {
 
   public void setTrackId(UUID trackId) {
     if (trackId == null) {
-      addError(DomainFieldNames.Common.TRACK_ID, ValidationError.EMPTY_TRACK_ID.getMessage());
+      addError(Common.TRACK_ID, ValidationError.EMPTY_TRACK_ID.getMessage());
     }
 
     this.trackId = trackId;

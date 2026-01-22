@@ -1,4 +1,4 @@
-package ua.notion.musiclibrary.domain;
+package ua.notion.musiclibrary.utils;
 
 public final class DomainFieldNames {
 

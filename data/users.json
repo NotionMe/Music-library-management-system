@@ -1,0 +1,34 @@
+[
+  {
+    "username": "john_doe",
+    "email": "john@example.com",
+    "password": "password123",
+    "role": "USER",
+    "followedUserIds": [],
+    "followedArtistIds": [
+      "19b5046e-746d-4d07-869b-0271e2cb6713"
+    ],
+    "followedPlaylistIds": [
+      "3929c0c1-1115-4337-9edc-a5b5f71a1a1b"
+    ],
+    "likedTrackIds": [
+      "bc50abe8-556f-4930-a198-995859a140bc"
+    ],
+    "savedAlbumIds": [],
+    "id": "ae63a644-0816-401d-aaa6-aac1c4c54ee7",
+    "errors": {}
+  },
+  {
+    "username": "admin_jane",
+    "email": "jane@example.com",
+    "password": "adminpass",
+    "role": "ADMIN",
+    "followedUserIds": [],
+    "followedArtistIds": [],
+    "followedPlaylistIds": [],
+    "likedTrackIds": [],
+    "savedAlbumIds": [],
+    "id": "05e50979-d311-4dcd-bef3-8f0fae08ea3c",
+    "errors": {}
+  }
+]

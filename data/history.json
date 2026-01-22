@@ -1,0 +1,21 @@
+[
+  {
+    "userId": "ae63a644-0816-401d-aaa6-aac1c4c54ee7",
+    "trackId": "bc50abe8-556f-4930-a198-995859a140bc",
+    "playedAt": {
+      "date": {
+        "year": 2026,
+        "month": 1,
+        "day": 22
+      },
+      "time": {
+        "hour": 2,
+        "minute": 43,
+        "second": 37,
+        "nano": 410817950
+      }
+    },
+    "id": "ba530c59-e68d-4e2e-8ff7-458178a1228a",
+    "errors": {}
+  }
+]

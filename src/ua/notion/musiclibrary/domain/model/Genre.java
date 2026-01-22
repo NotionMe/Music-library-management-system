@@ -1,5 +1,6 @@
-package ua.notion.musiclibrary.domain;
+package ua.notion.musiclibrary.domain.model;
 
+import ua.notion.musiclibrary.utils.DomainFieldNames;
 import ua.notion.musiclibrary.domain.exception.EntityValidationException;
 import ua.notion.musiclibrary.utils.ValidationError;
 

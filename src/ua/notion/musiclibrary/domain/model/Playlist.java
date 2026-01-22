@@ -1,5 +1,6 @@
-package ua.notion.musiclibrary.domain;
+package ua.notion.musiclibrary.domain.model;
 
+import static ua.notion.musiclibrary.utils.DomainFieldNames.*;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -35,14 +36,14 @@ public class Playlist extends BaseEntity {
   }
 
   public void setName(String name) {
-    clearError(DomainFieldNames.Common.NAME);
+    clearError(Common.NAME);
 
     if (name == null || name.trim().isEmpty()) {
-      addError(DomainFieldNames.Common.NAME, ValidationError.EMPTY_TITLE.getMessage());
+      addError(Common.NAME, ValidationError.EMPTY_TITLE.getMessage());
     }
 
     if (name.length() < 1 || name.length() > 100) {
-      addError(DomainFieldNames.Common.NAME, ValidationError.INVALID_TITLE_LENGTH.getMessage());
+      addError(Common.NAME, ValidationError.INVALID_TITLE_LENGTH.getMessage());
     }
 
     this.name = name;
@@ -62,7 +63,7 @@ public class Playlist extends BaseEntity {
 
   public void setUserId(UUID userId) {
     if (userId == null) {
-      addError(DomainFieldNames.Common.USER_ID, ValidationError.EMPTY_USER_ID.getMessage());
+      addError(Common.USER_ID, ValidationError.EMPTY_USER_ID.getMessage());
     }
 
     this.userId = userId;

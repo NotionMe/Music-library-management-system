@@ -1,9 +1,11 @@
-package ua.notion.musiclibrary.domain;
+package ua.notion.musiclibrary.domain.model;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
 import ua.notion.musiclibrary.domain.exception.EntityValidationException;
+import ua.notion.musiclibrary.utils.DomainFieldNames.*;
+import ua.notion.musiclibrary.utils.DomainFieldNames;
 import ua.notion.musiclibrary.utils.ValidationError;
 
 public class Album extends BaseEntity {
@@ -32,14 +34,14 @@ public class Album extends BaseEntity {
   }
 
   public void setTitle(String title) {
-    clearError(DomainFieldNames.Common.TITLE);
+    clearError(Common.TITLE);
 
     if (title == null || title.trim().isEmpty()) {
-      addError(DomainFieldNames.Common.TITLE, ValidationError.EMPTY_TITLE.getMessage());
+      addError(Common.TITLE, ValidationError.EMPTY_TITLE.getMessage());
     }
 
     if (title.length() < 1 || title.length() > 100) {
-      addError(DomainFieldNames.Common.TITLE, ValidationError.INVALID_TITLE_LENGTH.getMessage());
+      addError(Common.TITLE, ValidationError.INVALID_TITLE_LENGTH.getMessage());
     }
 
     this.title = title;
@@ -69,7 +71,7 @@ public class Album extends BaseEntity {
 
   public void setArtistId(UUID artistId) {
     if (artistId == null) {
-      addError(DomainFieldNames.Common.ARTIST_ID, ValidationError.EMPTY_ARTIST_ID.getMessage());
+      addError(Common.ARTIST_ID, ValidationError.EMPTY_ARTIST_ID.getMessage());
     }
 
     this.artistId = artistId;

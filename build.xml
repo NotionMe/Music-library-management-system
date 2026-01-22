@@ -4,9 +4,14 @@
     <property name="src.dir" value="src"/>
     <property name="build.dir" value="build"/>
     <property name="dist.dir" value="dist"/>
+    <property name="lib.dir" value="lib"/>
     <property name="main.class" value="ua.notion.musiclibrary.Main"/>
 
-    
+    <path id="classpath">
+        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+        <pathelement path="${build.dir}"/>
+    </path>
+
     <target name="clean" description="Видаляє директорії збірки">
         <delete dir="${build.dir}"/>
         <delete dir="${dist.dir}"/>
@@ -21,7 +26,9 @@
         <javac srcdir="${src.dir}" 
                destdir="${build.dir}" 
                includeantruntime="false"
-               encoding="UTF-8"/>
+               encoding="UTF-8">
+            <classpath refid="classpath"/>
+        </javac>
     </target>
 
     <target name="jar" depends="compile" description="Створює JAR файл">
@@ -35,9 +42,8 @@
     <target name="run" depends="compile" description="Запускає додаток">
         <echo message="Запуск ${main.class}..."/>
         <java classname="${main.class}" fork="true">
-            <classpath>
-                <pathelement path="${build.dir}"/>
-            </classpath>
+            <jvmarg value="--add-opens=java.base/java.time=ALL-UNNAMED"/>
+            <classpath refid="classpath"/>
         </java>
     </target>
 

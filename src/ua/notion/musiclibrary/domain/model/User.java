@@ -1,9 +1,13 @@
-package ua.notion.musiclibrary.domain;
+package ua.notion.musiclibrary.domain.model;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 import ua.notion.musiclibrary.domain.enums.Role;
 import ua.notion.musiclibrary.domain.exception.EntityValidationException;
+import ua.notion.musiclibrary.utils.DomainFieldNames;
 import ua.notion.musiclibrary.utils.ValidationError;
 
 public class User extends BaseEntity {
@@ -16,8 +20,19 @@ public class User extends BaseEntity {
   private String password;
   private Role role;
 
+  private Set<UUID> followedUserIds;
+  private Set<UUID> followedArtistIds;
+  private Set<UUID> followedPlaylistIds;
+  private Set<UUID> likedTrackIds;
+  private Set<UUID> savedAlbumIds;
+
   private User() {
     super();
+    this.followedUserIds = new HashSet<>();
+    this.followedArtistIds = new HashSet<>();
+    this.followedPlaylistIds = new HashSet<>();
+    this.likedTrackIds = new HashSet<>();
+    this.savedAlbumIds = new HashSet<>();
   }
 
   public User(String username, String email, String password, Role role) {
@@ -82,6 +97,56 @@ public class User extends BaseEntity {
     }
 
     this.role = role;
+  }
+
+  public void followUser(UUID userId) {
+    if (userId != null && !userId.equals(getID())) {
+      followedUserIds.add(userId);
+    }
+  }
+
+  public void followArtist(UUID artistId) {
+    if (artistId != null) {
+      followedArtistIds.add(artistId);
+    }
+  }
+
+  public void followPlaylist(UUID playlistId) {
+    if (playlistId != null) {
+      followedPlaylistIds.add(playlistId);
+    }
+  }
+
+  public void likeTrack(UUID trackId) {
+    if (trackId != null) {
+      likedTrackIds.add(trackId);
+    }
+  }
+
+  public void saveAlbum(UUID albumId) {
+    if (albumId != null) {
+      savedAlbumIds.add(albumId);
+    }
+  }
+
+  public Set<UUID> getFollowedUserIds() {
+    return new HashSet<>(followedUserIds);
+  }
+
+  public Set<UUID> getFollowedArtistIds() {
+    return new HashSet<>(followedArtistIds);
+  }
+
+  public Set<UUID> getFollowedPlaylistIds() {
+    return new HashSet<>(followedPlaylistIds);
+  }
+
+  public Set<UUID> getLikedTrackIds() {
+    return new HashSet<>(likedTrackIds);
+  }
+
+  public Set<UUID> getSavedAlbumIds() {
+    return new HashSet<>(savedAlbumIds);
   }
 
   @Override
