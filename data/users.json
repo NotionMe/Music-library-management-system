@@ -1,34 +1,79 @@
 [
   {
-    "username": "john_doe",
-    "email": "john@example.com",
-    "password": "password123",
-    "role": "USER",
+    "username": "darron.doyle",
+    "email": "marybelle.nitzsche@yahoo.com",
+    "password": "n161y6ua2mc",
+    "role": "ADMIN",
     "followedUserIds": [],
     "followedArtistIds": [
-      "19b5046e-746d-4d07-869b-0271e2cb6713"
+      "1454af8c-9644-483a-b211-303460b4ecc1"
     ],
-    "followedPlaylistIds": [
-      "3929c0c1-1115-4337-9edc-a5b5f71a1a1b"
-    ],
+    "followedPlaylistIds": [],
     "likedTrackIds": [
-      "bc50abe8-556f-4930-a198-995859a140bc"
+      "61d22a56-4639-47a8-bfb1-33cfe5330c64"
     ],
     "savedAlbumIds": [],
-    "id": "ae63a644-0816-401d-aaa6-aac1c4c54ee7",
+    "id": "2c7678c4-af9a-4d53-9b42-fc4833d00931",
     "errors": {}
   },
   {
-    "username": "admin_jane",
-    "email": "jane@example.com",
-    "password": "adminpass",
-    "role": "ADMIN",
+    "username": "cathern.hamill",
+    "email": "patrick.mitchell@gmail.com",
+    "password": "u408v0jx",
+    "role": "USER",
     "followedUserIds": [],
     "followedArtistIds": [],
     "followedPlaylistIds": [],
-    "likedTrackIds": [],
+    "likedTrackIds": [
+      "f8ae4ba6-4dde-4f50-8327-a3ca0acb489d"
+    ],
     "savedAlbumIds": [],
-    "id": "05e50979-d311-4dcd-bef3-8f0fae08ea3c",
+    "id": "40c170e0-40c4-4533-902e-742f5cf5eec4",
+    "errors": {}
+  },
+  {
+    "username": "kristine.shields",
+    "email": "halina.ryan@hotmail.com",
+    "password": "o9qa0548202d91s",
+    "role": "USER",
+    "followedUserIds": [],
+    "followedArtistIds": [],
+    "followedPlaylistIds": [],
+    "likedTrackIds": [
+      "f4c573ff-0d52-42e6-8ef6-e73d4b01b59f"
+    ],
+    "savedAlbumIds": [],
+    "id": "b3055c5c-f514-4a25-82ea-c5b4b869d723",
+    "errors": {}
+  },
+  {
+    "username": "milan.schumm",
+    "email": "tarra.frami@yahoo.com",
+    "password": "o7xo60d52",
+    "role": "USER",
+    "followedUserIds": [],
+    "followedArtistIds": [],
+    "followedPlaylistIds": [],
+    "likedTrackIds": [
+      "24576d39-0e1f-4993-9657-662ff4035e84"
+    ],
+    "savedAlbumIds": [],
+    "id": "9f8a6638-398a-4d1e-b838-f5970d46282f",
+    "errors": {}
+  },
+  {
+    "username": "sandy.corwin",
+    "email": "branden.moore@yahoo.com",
+    "password": "8roxk1xnqv32",
+    "role": "USER",
+    "followedUserIds": [],
+    "followedArtistIds": [],
+    "followedPlaylistIds": [],
+    "likedTrackIds": [
+      "61d22a56-4639-47a8-bfb1-33cfe5330c64"
+    ],
+    "savedAlbumIds": [],
+    "id": "9b03b147-7f85-4fd1-a680-db441863e7bd",
     "errors": {}
   }
 ]

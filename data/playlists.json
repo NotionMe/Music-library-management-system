@@ -1,12 +1,62 @@
 [
   {
-    "name": "My Favorites",
-    "isPrivate": false,
-    "userId": "ae63a644-0816-401d-aaa6-aac1c4c54ee7",
+    "name": "Jazz Mix",
+    "isPrivate": true,
+    "userId": "2c7678c4-af9a-4d53-9b42-fc4833d00931",
     "trackIds": [
-      "bc50abe8-556f-4930-a198-995859a140bc"
+      "134653f0-f5aa-4f02-a4fc-c28b3e42a9de",
+      "24576d39-0e1f-4993-9657-662ff4035e84",
+      "e7e46d19-085f-4fb7-8cec-9748f3f241fc"
     ],
-    "id": "3929c0c1-1115-4337-9edc-a5b5f71a1a1b",
+    "id": "560946df-6c81-45c9-962a-c87526227542",
+    "errors": {}
+  },
+  {
+    "name": "World Mix",
+    "isPrivate": false,
+    "userId": "40c170e0-40c4-4533-902e-742f5cf5eec4",
+    "trackIds": [
+      "60ce690f-b8b3-4264-8a35-2216b1782ec7",
+      "dc305281-e0a9-4cf1-bbd3-5b5512c46025",
+      "0ef2946b-12db-458f-a4ae-2e4776cdcba6"
+    ],
+    "id": "7c905edd-09dc-41e3-b440-3e457e09b342",
+    "errors": {}
+  },
+  {
+    "name": "Classical Mix",
+    "isPrivate": false,
+    "userId": "b3055c5c-f514-4a25-82ea-c5b4b869d723",
+    "trackIds": [
+      "cabe6e06-e1f0-46a8-a820-9fd71caa27de",
+      "7909a7b0-374d-4b72-bc35-7e12822d9cf4",
+      "77f0e44b-b37e-4110-a83e-2f9f43357c3a"
+    ],
+    "id": "0efad20b-bd08-47ba-9a3f-7df77e188072",
+    "errors": {}
+  },
+  {
+    "name": "Funk Mix",
+    "isPrivate": false,
+    "userId": "9f8a6638-398a-4d1e-b838-f5970d46282f",
+    "trackIds": [
+      "eef64cba-c8f7-4a89-b061-1bf1cb0d9e7b",
+      "b708a17c-1c17-4e35-a4de-014e7d4bc659",
+      "c6d3500c-bc66-493a-838a-fdfb2e20aa74"
+    ],
+    "id": "4f9479b9-aa20-4a1c-b595-a559a94b70ae",
+    "errors": {}
+  },
+  {
+    "name": "Pop Mix",
+    "isPrivate": true,
+    "userId": "9b03b147-7f85-4fd1-a680-db441863e7bd",
+    "trackIds": [
+      "fe4c09ee-d9d5-48c9-a54d-3ef4f559313b",
+      "134653f0-f5aa-4f02-a4fc-c28b3e42a9de",
+      "64a4ed55-4946-4de0-8cee-9886e648861b"
+    ],
+    "id": "5b7ddb84-595a-411c-be80-02297fcec221",
     "errors": {}
   }
 ]

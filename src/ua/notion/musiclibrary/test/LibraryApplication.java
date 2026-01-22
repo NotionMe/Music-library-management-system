@@ -1,57 +1,35 @@
 package ua.notion.musiclibrary.test;
 
 import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
-import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
+import net.datafaker.Faker;
 import ua.notion.musiclibrary.domain.enums.Role;
-import ua.notion.musiclibrary.domain.model.*;
-import ua.notion.musiclibrary.domain.repository.*;
-import ua.notion.musiclibrary.domain.repository.json.UnitOfWork;
+import ua.notion.musiclibrary.domain.impl.Album;
+import ua.notion.musiclibrary.domain.impl.Artist;
+import ua.notion.musiclibrary.domain.impl.Genre;
+import ua.notion.musiclibrary.domain.impl.ListeningHistory;
+import ua.notion.musiclibrary.domain.impl.Playlist;
+import ua.notion.musiclibrary.domain.impl.Track;
+import ua.notion.musiclibrary.domain.impl.User;
+import ua.notion.musiclibrary.infrastructure.storage.impl.DataContext;
 
 public class LibraryApplication {
-    private final UserRepository userRepository;
-    private final GenreRepository genreRepository;
-    private final ArtistRepository artistRepository;
-    private final AlbumRepository albumRepository;
-    private final TrackRepository trackRepository;
-    private final PlaylistRepository playlistRepository;
-    private final FavoriteRepository favoriteRepository;
-    private final ListeningHistoryRepository listeningHistoryRepository;
-    private final UserCollectionRepository userCollectionRepository;
+    private final DataContext context;
+    private final Faker faker;
 
-    public LibraryApplication(
-            UserRepository userRepository,
-            GenreRepository genreRepository,
-            ArtistRepository artistRepository,
-            AlbumRepository albumRepository,
-            TrackRepository trackRepository,
-            PlaylistRepository playlistRepository,
-            FavoriteRepository favoriteRepository,
-            ListeningHistoryRepository listeningHistoryRepository,
-            UserCollectionRepository userCollectionRepository) {
-        this.userRepository = userRepository;
-        this.genreRepository = genreRepository;
-        this.artistRepository = artistRepository;
-        this.albumRepository = albumRepository;
-        this.trackRepository = trackRepository;
-        this.playlistRepository = playlistRepository;
-        this.favoriteRepository = favoriteRepository;
-        this.listeningHistoryRepository = listeningHistoryRepository;
-        this.userCollectionRepository = userCollectionRepository;
+    public LibraryApplication(DataContext context) {
+        this.context = context;
+        this.faker = new Faker();
     }
 
     public void run() {
         System.out.println("=== ПОЧАТОК РОБОТИ ===");
 
         createSampleData();
-
         demonstrateCapabilities();
-
-        // 3. Демонстрація UnitOfWork
-        demonstrateUnitOfWork();
 
         System.out.println("=== ЗАВЕРШЕННЯ РОБОТИ ===");
     }
@@ -59,13 +37,24 @@ public class LibraryApplication {
     private void createSampleData() {
         createUsers();
         createGenres();
+        context.commit(); // Commit to ensure artists can find users and genres
+
         createArtists();
+        context.commit(); // Commit to ensure albums can find artists
+
         createAlbums();
+        context.commit(); // Commit to ensure tracks can find albums
+
         createTracks();
+        context.commit(); // Commit for playlists and history
+
         createPlaylists();
         createFavorites();
         createHistory();
         createCollections();
+        context.commit();
+
+        System.out.println("\nСтатус змін: " + context.getChangesSummary());
     }
 
     private void demonstrateCapabilities() {
@@ -82,256 +71,261 @@ public class LibraryApplication {
 
     // --- USERS ---
     private void createUsers() {
-        System.out.println("\n--- Створення користувачів (через UnitOfWork) ---");
-        if (userRepository.count() == 0) {
-            UnitOfWork<User, UUID> uow = new UnitOfWork<>(userRepository, User::getID);
-            
-            uow.registerNew(new User("john_doe", "john@example.com", "password123", Role.USER));
-            uow.registerNew(new User("admin_jane", "jane@example.com", "adminpass", Role.ADMIN));
-            
-            System.out.println("Стан перед комітом: " + uow.getChangesSummary());
-            uow.commit();
-            System.out.println("Збережено користувачів.");
+        System.out.println("\n--- Створення користувачів ---");
+        if (context.users().count() == 0) {
+            for (int i = 0; i < 5; i++) {
+                User user = new User(
+                        faker.name().username(),
+                        faker.internet().emailAddress(),
+                        faker.internet().password(),
+                        i == 0 ? Role.ADMIN : Role.USER);
+                context.registerNew(user);
+            }
+            System.out.println("Зареєстровано нових користувачів.");
         }
     }
 
     private void demonstrateUserCapabilities() {
         System.out.println("\n=== User Repository Capabilities ===");
-        userRepository.findByUsername("john_doe").ifPresent(u -> System.out.println("Found by username: " + u));
-        System.out.println("Admin users: " + userRepository.findByRole(Role.ADMIN).size());
+        context.users().findAll().stream().findFirst().ifPresent(u -> {
+            System.out.println("First user: " + u.getUsername());
+            context.users().findByUsername(u.getUsername())
+                    .ifPresent(found -> System.out.println("Found by username: " + found));
+        });
+        System.out.println("Admin users: " + context.users().findByRole(Role.ADMIN).size());
     }
 
     // --- GENRES ---
     private void createGenres() {
-        System.out.println("\n--- Створення жанрів (через UnitOfWork) ---");
-        if (genreRepository.count() == 0) {
-            UnitOfWork<Genre, UUID> uow = new UnitOfWork<>(genreRepository, Genre::getID);
-            
-            uow.registerNew(new Genre("Rock"));
-            uow.registerNew(new Genre("Pop"));
-            uow.registerNew(new Genre("Jazz"));
-            
-            System.out.println("Стан перед комітом: " + uow.getChangesSummary());
-            uow.commit();
-            System.out.println("Збережено жанри.");
+        System.out.println("\n--- Створення жанрів ---");
+        if (context.genres().count() == 0) {
+            for (int i = 0; i < 5; i++) {
+                context.registerNew(new Genre(faker.music().genre()));
+                
+            }
+            System.out.println("Зареєстровано нові жанри.");
         }
     }
 
     private void demonstrateGenreCapabilities() {
         System.out.println("\n=== Genre Repository Capabilities ===");
-        genreRepository.findByName("Rock").forEach(g -> System.out.println("Found genre: " + g.getName()));
+        context.genres().findAll().stream().findFirst().ifPresent(g -> {
+            System.out.println("Sample genre: " + g.getName());
+            context.genres().findByName(g.getName())
+                    .forEach(found -> System.out.println("Found genre: " + found.getName()));
+        });
     }
 
     // --- ARTISTS ---
     private void createArtists() {
-        System.out.println("\n--- Створення артистів (через UnitOfWork) ---");
-        if (artistRepository.count() == 0) {
-            UnitOfWork<Artist, UUID> uow = new UnitOfWork<>(artistRepository, Artist::getID);
-            User user = userRepository.findByRole(Role.USER).stream().findFirst().orElseThrow();
-            
-            Artist artist = new Artist("The Beatles", "Legendary British rock band", user.getID());
-            uow.registerNew(artist);
-            
-            uow.commit();
-            System.out.println("Збережено артиста: " + artist.getStageName());
+        System.out.println("\n--- Створення артистів ---");
+        if (context.artists().count() == 0) {
+            List<User> users = context.users().findAll();
+            if (!users.isEmpty()) {
+                for (int i = 0; i < 3; i++) {
+                    User user = users.get(faker.random().nextInt(users.size()));
+                    Artist artist = new Artist(
+                            faker.artist().name(),
+                            faker.lorem().sentence(),
+                            user.getID());
+                    context.registerNew(artist);
+                }
+                System.out.println("Зареєстровано нових артистів.");
+            }
         }
     }
 
     private void demonstrateArtistCapabilities() {
         System.out.println("\n=== Artist Repository Capabilities ===");
-        artistRepository.findByStageName("The Beatles")
-                .forEach(a -> System.out.println("Found artist: " + a.getStageName()));
+        context.artists().findAll().stream().findFirst().ifPresent(a -> {
+            System.out.println("Sample artist: " + a.getStageName());
+            context.artists().findByStageName(a.getStageName())
+                    .forEach(found -> System.out.println("Found artist: " + found.getStageName()));
+        });
     }
 
     // --- ALBUMS ---
     private void createAlbums() {
-        System.out.println("\n--- Створення альбомів (через UnitOfWork) ---");
-        if (albumRepository.count() == 0) {
-            UnitOfWork<Album, UUID> uow = new UnitOfWork<>(albumRepository, Album::getID);
-            
-            artistRepository.findAll().stream().findFirst().ifPresent(artist -> {
-                Album album = new Album("Abbey Road", LocalDate.of(1969, 9, 26), artist.getID());
-                uow.registerNew(album);
-                System.out.println("Альбом додано в UoW: " + album.getTitle());
-            });
-            
-            uow.commit();
-            System.out.println("Зміни збережено.");
+        System.out.println("\n--- Створення альбомів ---");
+        if (context.albums().count() == 0) {
+            List<Artist> artists = context.artists().findAll();
+            for (Artist artist : artists) {
+                for (int i = 0; i < 2; i++) {
+                    Album album = new Album(
+                            faker.expression("#{music.genre} Album #{code.asin}"),
+                            faker.date().past(3650, TimeUnit.DAYS).toInstant().atZone(ZoneId.systemDefault())
+                                    .toLocalDate(),
+                            artist.getID());
+                    context.registerNew(album);
+                }
+            }
+            System.out.println("Зареєстровано нові альбоми.");
         }
     }
 
     private void demonstrateAlbumCapabilities() {
         System.out.println("\n=== Album Repository Capabilities ===");
-        albumRepository.findByTitleContaining("Road").forEach(a -> System.out.println("Found album: " + a.getTitle()));
+        context.albums().findAll().stream().findFirst().ifPresent(a -> {
+            String partialTitle = a.getTitle().substring(0, Math.min(a.getTitle().length(), 4));
+            System.out.println("Searching for albums containing: " + partialTitle);
+            context.albums().findByTitleContaining(partialTitle)
+                    .forEach(found -> System.out.println("Found album: " + found.getTitle()));
+        });
     }
 
     // --- TRACKS ---
     private void createTracks() {
-        System.out.println("\n--- Створення треків (через UnitOfWork) ---");
-        if (trackRepository.count() == 0) {
-            UnitOfWork<Track, UUID> uow = new UnitOfWork<>(trackRepository, Track::getID);
-            
-            Album album = albumRepository.findAll().stream().findFirst().orElseThrow();
-            Genre genre = genreRepository.findAll().stream().findFirst().orElseThrow();
-            Artist artist = artistRepository.findAll().stream().findFirst().orElseThrow();
-            
-            Track track1 = new Track("Come Together", Duration.ofMinutes(4).plusSeconds(19), album.getID());
-            track1.addGenre(genre.getID());
-            track1.addArtist(artist.getID());
-            
-            Track track2 = new Track("Something", Duration.ofMinutes(3), album.getID());
-            track2.addGenre(genre.getID());
-            track2.addArtist(artist.getID());
+        System.out.println("\n--- Створення треків ---");
+        if (context.tracks().count() == 0) {
+            List<Album> albums = context.albums().findAll();
+            List<Genre> genres = context.genres().findAll();
+            List<Artist> artists = context.artists().findAll();
 
-            uow.registerNew(track1);
-            uow.registerNew(track2);
-            
-            System.out.println("Треки підготовлені: " + uow.getChangesSummary());
-            uow.commit();
-            System.out.println("Треки збережені.");
+            if (!albums.isEmpty() && !genres.isEmpty() && !artists.isEmpty()) {
+                for (Album album : albums) {
+                    for (int i = 0; i < 5; i++) {
+                        Track track = new Track(
+                                faker.expression("#{music.genre} Track #{code.asin}"),
+                                Duration.ofSeconds(faker.random().nextInt(120, 300)),
+                                album.getID());
+                        track.addGenre(genres.get(faker.random().nextInt(genres.size())).getID());
+                        track.addArtist(artists.get(faker.random().nextInt(artists.size())).getID());
+                        context.registerNew(track);
+                    }
+                }
+                System.out.println("Зареєстровано нові треки.");
+            }
         }
     }
 
     private void demonstrateTrackCapabilities() {
         System.out.println("\n=== Track Repository Capabilities ===");
-        trackRepository.findByTitleContainingIgnoreCase("Come")
-                .forEach(t -> System.out.println("Found track: " + t.getTitle()));
+        context.tracks().findAll().stream().findFirst().ifPresent(t -> {
+            String partialTitle = t.getTitle().substring(0, Math.min(t.getTitle().length(), 3));
+            System.out.println("Searching for tracks containing: " + partialTitle);
+            context.tracks().findByTitleContainingIgnoreCase(partialTitle)
+                    .forEach(found -> System.out.println("Found track: " + found.getTitle()));
+        });
     }
 
     // --- PLAYLISTS ---
     private void createPlaylists() {
-        System.out.println("\n--- Створення плейлистів (через UnitOfWork) ---");
-        if (playlistRepository.count() == 0) {
-            UnitOfWork<Playlist, UUID> uow = new UnitOfWork<>(playlistRepository, Playlist::getID);
-            
-            User user = userRepository.findAll().stream().findFirst().orElseThrow();
-            Track track = trackRepository.findAll().stream().findFirst().orElseThrow();
+        System.out.println("\n--- Створення плейлистів ---");
+        if (context.playlists().count() == 0) {
+            List<User> users = context.users().findAll();
+            List<Track> tracks = context.tracks().findAll();
 
-            Playlist playlist = new Playlist("My Favorites", false, user.getID());
-            playlist.addTrack(track.getID());
-            
-            uow.registerNew(playlist);
-            uow.commit();
-            System.out.println("Збережено плейлист: " + playlist.getName());
+            if (!users.isEmpty() && !tracks.isEmpty()) {
+                for (User user : users) {
+                    Playlist playlist = new Playlist(
+                            faker.music().genre() + " Mix",
+                            faker.bool().bool(),
+                            user.getID());
+                    // Додаємо 3 випадкові треки
+                    for (int i = 0; i < 3; i++) {
+                        playlist.addTrack(tracks.get(faker.random().nextInt(tracks.size())).getID());
+                    }
+                    context.registerNew(playlist);
+                }
+                System.out.println("Зареєстровано нові плейлисти.");
+            }
         }
     }
 
     private void demonstratePlaylistCapabilities() {
         System.out.println("\n=== Playlist Repository Capabilities ===");
-        playlistRepository.findByNameContainingIgnoreCase("Favorites")
-                .forEach(p -> System.out.println("Found playlist: " + p.getName()));
+        context.playlists().findAll().stream().findFirst().ifPresent(p -> {
+            System.out.println("Sample playlist: " + p.getName());
+            context.playlists().findByNameContainingIgnoreCase(p.getName())
+                    .forEach(found -> System.out.println("Found playlist: " + found.getName()));
+        });
     }
 
     // --- FAVORITES (LIKED SONGS) ---
     private void createFavorites() {
-        System.out.println("\n--- Лайки (через UnitOfWork) ---");
-        User user = userRepository.findAll().stream().findFirst().orElseThrow();
-        if (user.getLikedTrackIds().isEmpty()) {
-            UnitOfWork<User, UUID> uow = new UnitOfWork<>(userRepository, User::getID);
-            Track track = trackRepository.findAll().stream().findFirst().orElseThrow();
-            
-            user.likeTrack(track.getID());
-            uow.registerDirty(user);
-            
-            uow.commit();
-            System.out.println("Збережено лайк користувача: " + user.getUsername());
+        System.out.println("\n--- Лайки ---");
+        List<User> users = context.users().findAll();
+        List<Track> tracks = context.tracks().findAll();
+
+        if (!users.isEmpty() && !tracks.isEmpty()) {
+            for (User user : users) {
+                if (user.getLikedTrackIds().isEmpty()) {
+                    Track track = tracks.get(faker.random().nextInt(tracks.size()));
+                    user.likeTrack(track.getID());
+                    context.registerDirty(user);
+                }
+            }
+            System.out.println("Оновлено вподобання користувачів.");
         }
     }
 
     private void demonstrateFavoriteCapabilities() {
         System.out.println("\n=== Liked Songs Capabilities ===");
-        User user = userRepository.findAll().stream().findFirst().orElseThrow();
-        System.out.println("Liked songs count: " + user.getLikedTrackIds().size());
+        context.users().findAll().stream().findFirst().ifPresent(u -> System.out
+                .println("User " + u.getUsername() + " liked songs count: " + u.getLikedTrackIds().size()));
     }
 
     // --- HISTORY ---
     private void createHistory() {
-        System.out.println("\n--- Створення історії (через UnitOfWork) ---");
-        if (listeningHistoryRepository.count() == 0) {
-            UnitOfWork<ListeningHistory, UUID> uow = new UnitOfWork<>(listeningHistoryRepository, ListeningHistory::getID);
-            
-            User user = userRepository.findAll().stream().findFirst().orElseThrow();
-            Track track = trackRepository.findAll().stream().findFirst().orElseThrow();
+        System.out.println("\n--- Створення історії ---");
+        if (context.listeningHistory().count() == 0) {
+            List<User> users = context.users().findAll();
+            List<Track> tracks = context.tracks().findAll();
 
-            ListeningHistory history = new ListeningHistory(user.getID(), track.getID(), LocalDateTime.now());
-            uow.registerNew(history);
-            uow.commit();
-            System.out.println("Збережено запис історії");
+            if (!users.isEmpty() && !tracks.isEmpty()) {
+                for (int i = 0; i < 10; i++) {
+                    User user = users.get(faker.random().nextInt(users.size()));
+                    Track track = tracks.get(faker.random().nextInt(tracks.size()));
+                    ListeningHistory history = new ListeningHistory(
+                            user.getID(),
+                            track.getID(),
+                            faker.date().past(30, TimeUnit.DAYS).toInstant().atZone(ZoneId.systemDefault())
+                                    .toLocalDateTime());
+                    context.registerNew(history);
+                }
+                System.out.println("Зареєстровано записи історії.");
+            }
         }
     }
 
     private void demonstrateHistoryCapabilities() {
         System.out.println("\n=== History Repository Capabilities ===");
-        User user = userRepository.findAll().stream().findFirst().orElseThrow();
-        System.out.println("History records for user: " + listeningHistoryRepository.findByUserId(user.getID()).size());
+        context.users().findAll().stream().findFirst()
+                .ifPresent(u -> System.out.println("History records for user " + u.getUsername() + ": " +
+                        context.listeningHistory().findByUserId(u.getID()).size()));
     }
 
     // --- COLLECTIONS (USER LIBRARY) ---
     private void createCollections() {
-        System.out.println("\n--- Бібліотека користувача (через UnitOfWork) ---");
-        User user = userRepository.findAll().stream().findFirst().orElseThrow();
-        
-        UnitOfWork<User, UUID> uow = new UnitOfWork<>(userRepository, User::getID);
-        
-        // Follow Artist
-        Artist artist = artistRepository.findAll().stream().findFirst().orElseThrow();
-        user.followArtist(artist.getID());
-        System.out.println("User followed artist: " + artist.getStageName());
+        System.out.println("\n--- Бібліотека користувача ---");
+        List<User> users = context.users().findAll();
+        List<Artist> artists = context.artists().findAll();
+        List<Playlist> playlists = context.playlists().findAll();
 
-        // Follow Playlist
-        Playlist playlist = playlistRepository.findAll().stream().findFirst().orElseThrow();
-        user.followPlaylist(playlist.getID());
-        System.out.println("User followed playlist: " + playlist.getName());
-
-        uow.registerDirty(user);
-        uow.commit();
-        System.out.println("Зміни профілю користувача збережено.");
+        if (!users.isEmpty()) {
+            User user = users.get(0);
+            if (!artists.isEmpty()) {
+                Artist artist = artists.get(faker.random().nextInt(artists.size()));
+                user.followArtist(artist.getID());
+                System.out.println("User followed artist: " + artist.getStageName());
+            }
+            if (!playlists.isEmpty()) {
+                Playlist playlist = playlists.get(faker.random().nextInt(playlists.size()));
+                user.followPlaylist(playlist.getID());
+                System.out.println("User followed playlist: " + playlist.getName());
+            }
+            context.registerDirty(user);
+            System.out.println("Зміни профілю користувача зареєстровано.");
+        }
     }
 
     private void demonstrateCollectionCapabilities() {
         System.out.println("\n=== User Library Capabilities ===");
-        User user = userRepository.findAll().stream().findFirst().orElseThrow();
-        System.out.println("Followed artists: " + user.getFollowedArtistIds().size());
-        System.out.println("Followed playlists: " + user.getFollowedPlaylistIds().size());
+        context.users().findAll().stream().findFirst().ifPresent(u -> {
+            System.out.println("User: " + u.getUsername());
+            System.out.println("Followed artists: " + u.getFollowedArtistIds().size());
+            System.out.println("Followed playlists: " + u.getFollowedPlaylistIds().size());
+        });
     }
 
-    private void demonstrateUnitOfWork() {
-        System.out.println("\n=== UnitOfWork Demonstration ===");
-        
-        // Створюємо UnitOfWork для треків
-        UnitOfWork<Track, UUID> trackUoW = new UnitOfWork<>(trackRepository, Track::getID);
-        Album album = albumRepository.findAll().stream().findFirst().orElseThrow();
-
-        // 1. Реєстрація нових об'єктів (Register New)
-        Track t1 = new Track("UoW Track 1", Duration.ofMinutes(1), album.getID());
-        Track t2 = new Track("UoW Track 2", Duration.ofMinutes(2), album.getID());
-
-        trackUoW.registerNew(t1);
-        trackUoW.registerNew(t2);
-        System.out.println("Added 2 tracks to UoW. Summary: " + trackUoW.getChangesSummary());
-
-        // 2. Commit (Збереження змін)
-        trackUoW.commit();
-        System.out.println("Committed changes.");
-
-        // Перевірка
-        long count = trackRepository.findAll().stream()
-                .filter(t -> t.getTitle().startsWith("UoW Track"))
-                .count();
-        System.out.println("Tracks found in repository: " + count);
-        
-        // 3. Модифікація та видалення (Dirty & Deleted)
-        t1.setTitle("UoW Track 1 Modified");
-        trackUoW.registerDirty(t1);
-        trackUoW.registerDeleted(t2);
-        
-        System.out.println("Modified 1 and Deleted 1. Summary: " + trackUoW.getChangesSummary());
-        trackUoW.commit();
-        System.out.println("Committed update/delete.");
-        
-        // Фінальна перевірка
-        trackRepository.findById(t1.getID()).ifPresent(t -> System.out.println("Track 1 title: " + t.getTitle()));
-        boolean t2Exists = trackRepository.existsById(t2.getID());
-        System.out.println("Track 2 exists: " + t2Exists);
-    }
 }

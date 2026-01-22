@@ -1,17 +1,27 @@
 [
   {
-    "name": "Rock",
-    "id": "ca791442-7288-41e5-86e1-ca4fdc389fc3",
+    "name": "Jazz",
+    "id": "ed6287ed-4ec1-4047-8831-dfccab54512d",
+    "errors": {}
+  },
+  {
+    "name": "Funk",
+    "id": "30ff3ade-c17a-49dc-aa9d-b5588e584955",
+    "errors": {}
+  },
+  {
+    "name": "Folk",
+    "id": "2676c098-5c45-460b-b4ee-cbe86eaa61d8",
+    "errors": {}
+  },
+  {
+    "name": "Rap",
+    "id": "ddedf333-32bf-420a-bdf4-333a6bd8b2fd",
     "errors": {}
   },
   {
     "name": "Pop",
-    "id": "2e72438f-a87c-4238-b584-132da2b024d3",
-    "errors": {}
-  },
-  {
-    "name": "Jazz",
-    "id": "14b2371b-5c7b-4cfa-9fb8-c905632cf46a",
+    "id": "0362a9ba-4964-41f2-ae66-7d69532aec23",
     "errors": {}
   }
 ]
