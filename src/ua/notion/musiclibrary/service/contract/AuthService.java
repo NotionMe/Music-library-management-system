@@ -5,8 +5,9 @@ import ua.notion.musiclibrary.dto.auth.UserLoginDto;
 import ua.notion.musiclibrary.dto.auth.UserRegistrationDto;
 
 public interface AuthService {
+    
+    User register(UserRegistrationDto dto);
 
-    // 1. Метод register(UserRegistrationDto dto) -> повертає User
+    User login(UserLoginDto dto);
 
-    // 2. Метод login(UserLoginDto dto) -> повертає User (або кидає помилку)
 }

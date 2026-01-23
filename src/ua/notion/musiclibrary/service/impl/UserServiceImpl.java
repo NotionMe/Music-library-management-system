@@ -8,6 +8,24 @@ import java.util.UUID;
 
 public class UserServiceImpl implements UserService {
 
+    @Override
+    public UserProfileDto getProfile(UUID userId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getProfile'");
+    }
+
+    @Override
+    public boolean updateProfile(UUID userId, UserUpdateDto dto) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updateProfile'");
+    }
+
+    @Override
+    public boolean followUser(UUID currentUserId, UUID targetUserId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'followUser'");
+    }
+
     // 1. Поля (UserRepository)
 
     // 2. Конструктор

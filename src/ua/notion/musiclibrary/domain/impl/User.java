@@ -19,6 +19,7 @@ public class User extends BaseEntity {
   private String email;
   private String password;
   private Role role;
+  private String verificationCode;
 
   private Set<UUID> followedUserIds;
   private Set<UUID> followedArtistIds;
@@ -97,6 +98,14 @@ public class User extends BaseEntity {
     }
 
     this.role = role;
+  }
+
+  public String getVerificationCode() {
+    return verificationCode;
+  }
+
+  public void setVerificationCode(String verificationCode) {
+    this.verificationCode = verificationCode;
   }
 
   public void followUser(UUID userId) {

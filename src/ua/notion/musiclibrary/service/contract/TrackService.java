@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface TrackService {
 
-    // 1. Метод searchTracks(TrackSearchDto searchDto) -> повертає List<TrackDto>
+    List<TrackDto> searchTracks(TrackSearchDto searchDto);
 
-    // 2. Метод getTrackDetails(UUID trackId) -> повертає TrackDto
+    TrackDto getTrackDetails(UUID trackId);
 }

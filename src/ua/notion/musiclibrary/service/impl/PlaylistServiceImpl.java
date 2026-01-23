@@ -11,6 +11,36 @@ import java.util.UUID;
 
 public class PlaylistServiceImpl implements PlaylistService {
 
+    @Override
+    public Playlist createPlayList(PlaylistCreateDto dto) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'createPlayList'");
+    }
+
+    @Override
+    public Playlist updatePlaylist(PlaylistUpdateDto dto) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updatePlaylist'");
+    }
+
+    @Override
+    public boolean deletePlaylist(UUID playlistId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deletePlaylist'");
+    }
+
+    @Override
+    public boolean addTrackToPlaylist(UUID playlistId, UUID trackId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addTrackToPlaylist'");
+    }
+
+    @Override
+    public List<Playlist> getMyPlaylists(UUID userId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getMyPlaylists'");
+    }
+
     // 1. Поля (PlaylistRepository, TrackRepository - якщо треба перевіряти треки)
 
     // 2. Конструктор

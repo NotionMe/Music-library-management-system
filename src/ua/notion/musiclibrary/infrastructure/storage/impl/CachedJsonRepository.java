@@ -4,6 +4,8 @@ import ua.notion.musiclibrary.domain.impl.Entity;
 import ua.notion.musiclibrary.domain.exception.RepositoryException;
 import ua.notion.musiclibrary.infrastructure.storage.Repository;
 
+import ua.notion.musiclibrary.infrastructure.storage.impl.adapter.DurationAdapter;
+
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,11 +14,13 @@ import java.io.Writer;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Predicate;
+import java.util.stream.IntStream;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -43,6 +47,7 @@ public abstract class CachedJsonRepository<T extends Entity> implements Reposito
         this.filePath = Path.of(filename);
         this.listType = listType;
         this.gson = new GsonBuilder()
+                .registerTypeAdapter(Duration.class, new DurationAdapter())
                 .setPrettyPrinting()
                 .create();
         ensureDirectoryExists();
@@ -72,18 +77,12 @@ public abstract class CachedJsonRepository<T extends Entity> implements Reposito
         // Зберігаємо у файл
         List<T> entities = loadFromFile();
 
-        boolean found = false;
-        for (int i = 0; i < entities.size(); i++) {
-            if (entities.get(i).getID().equals(id)) {
-                entities.set(i, entity);
-                found = true;
-                break;
-            }
-        }
-
-        if (!found) {
-            entities.add(entity);
-        }
+        IntStream.range(0, entities.size())
+                .filter(i -> entities.get(i).getID().equals(id))
+                .findFirst()
+                .ifPresentOrElse(
+                        i -> entities.set(i, entity),
+                        () -> entities.add(entity));
 
         writeToFile(entities);
         return entity;

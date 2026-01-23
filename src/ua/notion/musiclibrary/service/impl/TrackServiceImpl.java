@@ -9,6 +9,18 @@ import java.util.UUID;
 
 public class TrackServiceImpl implements TrackService {
 
+    @Override
+    public List<TrackDto> searchTracks(TrackSearchDto searchDto) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'searchTracks'");
+    }
+
+    @Override
+    public TrackDto getTrackDetails(UUID trackId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getTrackDetails'");
+    }
+
     // 1. Поля (TrackRepository)
 
     // 2. Конструктор

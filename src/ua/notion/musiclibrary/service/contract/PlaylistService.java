@@ -8,13 +8,13 @@ import java.util.List;
 
 public interface PlaylistService {
 
-    // 1. Метод createPlaylist(PlaylistCreateDto dto) -> повертає Playlist
+    Playlist createPlayList(PlaylistCreateDto dto);
 
-    // 2. Метод updatePlaylist(PlaylistUpdateDto dto)
+    Playlist updatePlaylist(PlaylistUpdateDto dto);
 
-    // 3. Метод deletePlaylist(UUID playlistId)
+    boolean deletePlaylist(UUID playlistId);
 
-    // 4. Метод addTrackToPlaylist(UUID playlistId, UUID trackId)
+    boolean addTrackToPlaylist(UUID playlistId, UUID trackId);
 
-    // 5. Метод getMyPlaylists(UUID userId) -> повертає List<Playlist>
+    List<Playlist> getMyPlaylists(UUID userId);
 }

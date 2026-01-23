@@ -7,9 +7,9 @@ import java.util.UUID;
 
 public interface UserService {
 
-    // 1. Метод getProfile(UUID userId) -> повертає UserProfileDto
+    UserProfileDto getProfile(UUID userId);
 
-    // 2. Метод updateProfile(UUID userId, UserUpdateDto dto)
+    boolean updateProfile(UUID userId, UserUpdateDto dto);
 
-    // 3. Метод followUser(UUID currentUserId, UUID targetUserId)
+    boolean followUser(UUID currentUserId, UUID targetUserId);
 }

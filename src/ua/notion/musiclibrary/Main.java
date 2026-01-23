@@ -1,30 +1,25 @@
 package ua.notion.musiclibrary;
 
-import ua.notion.musiclibrary.infrastructure.storage.impl.DataContext;
-import ua.notion.musiclibrary.test.LibraryApplication;
+import java.util.UUID;
 
-import com.password4j.Password;
-import com.password4j.Hash;
+import ua.notion.musiclibrary.infrastructure.storage.impl.DataContext;
+import ua.notion.musiclibrary.service.contract.EmailService;
+import ua.notion.musiclibrary.service.impl.EmailServiceImpl;
+import ua.notion.musiclibrary.test.LibraryApplication;
 
 public class Main {
   public static void main(String[] args) {
-    // // Отримуємо singleton контекст репозиторіїв
+    // Отримуємо singleton контекст репозиторіїв
     // DataContext context = DataContext.getInstance();
 
-    // // Створюємо застосунок з контекстом
+    // Створюємо застосунок з контекстом
     // LibraryApplication libraryApplication = new LibraryApplication(context);
 
     // libraryApplication.run();
 
-    String rawPassword = "мій_пароль_2026";
+    // EmailService email = new EmailServiceImpl("adlo nula ulej jwxg",
+    // "hagami16@gmail.com");
+    // email.sendPasswordCode("ubogijstas@gmail.com", "elpacho");
 
-    // 1. Хешування
-    Hash hash = Password.hash(rawPassword).withBcrypt();
-    String hashString = hash.getResult();
-    System.out.println("Хеш: " + hashString);
-
-    // 2. Перевірка
-    boolean isCorrect = Password.check(rawPassword, hashString).withBcrypt();
-    System.out.println("Пароль вірний: " + isCorrect);
   }
 }
