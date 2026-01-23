@@ -54,7 +54,7 @@ public class User extends BaseEntity {
   public void setUsername(String username) {
     if (username == null || username.trim().isEmpty()) {
       addError(DomainFieldNames.User.USERNAME, ValidationError.EMPTY_NAME.getMessage());
-    } else if (username.length() < 3 || username.length() > 50) {
+    } else if (username.length() < 3 || username.length() > 15) {
       addError(DomainFieldNames.User.USERNAME, ValidationError.USERNAME_LENGTH_INVALID.getMessage());
     }
 
