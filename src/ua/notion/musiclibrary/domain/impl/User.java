@@ -15,6 +15,9 @@ public class User extends BaseEntity {
   private static final Pattern EMAIL_PATTERN = Pattern.compile(
       "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
 
+  private static final Pattern PASSWORD_PATTERN = Pattern.compile(
+      "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$");
+
   private String username;
   private String email;
   private String password;
@@ -53,7 +56,7 @@ public class User extends BaseEntity {
   }
 
   public void setUsername(String username) {
-    if (username == null || username.trim().isEmpty()) {
+    if (username == null || username.isBlank()) {
       addError(DomainFieldNames.User.USERNAME, ValidationError.EMPTY_NAME.getMessage());
     } else if (username.length() < 3 || username.length() > 15) {
       addError(DomainFieldNames.User.USERNAME, ValidationError.USERNAME_LENGTH_INVALID.getMessage());
@@ -67,7 +70,7 @@ public class User extends BaseEntity {
   }
 
   public void setEmail(String email) {
-    if (email == null || email.trim().isEmpty()) {
+    if (email == null || email.isBlank()) {
       addError(DomainFieldNames.User.EMAIL, ValidationError.EMPTY_EMAIL.getMessage());
     } else if (!EMAIL_PATTERN.matcher(email).matches()) {
       addError(DomainFieldNames.User.EMAIL, ValidationError.INVALID_EMAIL_FORMAT.getMessage());
@@ -81,8 +84,11 @@ public class User extends BaseEntity {
   }
 
   public void setPassword(String password) {
-    if (password == null || password.length() < 6) {
-      addError(DomainFieldNames.User.PASSWORD, ValidationError.PASSWORD_TOO_SHORT.getMessage());
+    if (password == null || password.isBlank()) {
+      addError(DomainFieldNames.User.PASSWORD, ValidationError.EMPTY_PASSWORD.getMessage());
+    } else if (!PASSWORD_PATTERN.matcher(password).matches()) {
+      addError(DomainFieldNames.User.PASSWORD,
+          "Пароль має містити мінімум 8 символів, цифру, велику літеру та спецсимвол!");
     }
 
     this.password = password;

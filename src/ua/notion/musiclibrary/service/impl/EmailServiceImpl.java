@@ -18,12 +18,11 @@ public class EmailServiceImpl implements EmailService {
     private final String password;
     private final Properties properties;
     private final Session session;
-    private final String from;
+    private final String from = "hagami16@gmail.com"; //TODO: Поміняти на сервісну почту!!!
 
     private final String host = "smtp.gmail.com";
 
-    public EmailServiceImpl(String password, String from) {
-        this.from = from;
+    public EmailServiceImpl(String password) {
         this.password = password;
         this.properties = new Properties();
         this.properties.put("mail.smtp.host", host);

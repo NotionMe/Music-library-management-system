@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import com.password4j.Hash;
 import com.password4j.Password;
 
 import ua.notion.musiclibrary.domain.exception.EntityValidationException;
@@ -14,8 +13,8 @@ import ua.notion.musiclibrary.domain.impl.User;
 import ua.notion.musiclibrary.domain.util.DomainFieldNames;
 import ua.notion.musiclibrary.dto.auth.UserLoginDto;
 import ua.notion.musiclibrary.dto.auth.UserRegistrationDto;
-import ua.notion.musiclibrary.infrastructure.storage.contract.UserRepository;
 import ua.notion.musiclibrary.infrastructure.storage.impl.DataContext;
+import ua.notion.musiclibrary.mapper.UserMapper;
 import ua.notion.musiclibrary.service.contract.AuthService;
 import ua.notion.musiclibrary.service.contract.EmailService;
 
@@ -41,11 +40,7 @@ public class AuthServiceImpl implements AuthService {
 
         String hashedPassword = Password.hash(dto.password()).withBcrypt().getResult();
 
-        User newUser = new User(
-                dto.username(),
-                dto.email(),
-                hashedPassword,
-                dto.role());
+        User newUser = UserMapper.toDomain(dto, hashedPassword);
 
         String verificationCode = emailService.sendPasswordCode(newUser.getEmail(), newUser.getUsername());
         newUser.setVerificationCode(verificationCode);
