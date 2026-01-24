@@ -5,6 +5,8 @@ import ua.notion.musiclibrary.domain.exception.RepositoryException;
 import ua.notion.musiclibrary.infrastructure.storage.Repository;
 
 import ua.notion.musiclibrary.infrastructure.storage.impl.adapter.DurationAdapter;
+import ua.notion.musiclibrary.infrastructure.storage.impl.adapter.LocalDateAdapter;
+import ua.notion.musiclibrary.infrastructure.storage.impl.adapter.LocalDateTimeAdapter;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -15,6 +17,8 @@ import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -48,6 +52,8 @@ public abstract class CachedJsonRepository<T extends Entity> implements Reposito
         this.listType = listType;
         this.gson = new GsonBuilder()
                 .registerTypeAdapter(Duration.class, new DurationAdapter())
+                .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
                 .setPrettyPrinting()
                 .create();
         ensureDirectoryExists();

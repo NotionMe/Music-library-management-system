@@ -1,16 +1,16 @@
 [
   {
-    "username": "notion",
-    "email": "ubogijstas@gmail.com",
-    "password": "$2b$10$n.ywxmsIQrcUyrRtkj7n0.z9v/Pa40dBgQu2mFIZ.OAC.tOnGJ5OO",
+    "username": "testuser",
+    "email": "test@example.com",
+    "password": "$2b$10$YTv6USp49.pb0kBkMWNmheFNTAzbsyAN3oSf29oFA2qXhv4w/vV9C",
     "role": "ADMIN",
-    "verificationCode": "AMAKV-AW01S",
+    "verificationCode": "BM63C-GYXNI",
     "followedUserIds": [],
     "followedArtistIds": [],
     "followedPlaylistIds": [],
     "likedTrackIds": [],
     "savedAlbumIds": [],
-    "id": "a7dd112c-75e5-4d3a-8ea0-f905eba5d69a",
+    "id": "80f0f87b-ff8a-4314-b5c2-89e59bb875fb",
     "errors": {}
   }
 ]

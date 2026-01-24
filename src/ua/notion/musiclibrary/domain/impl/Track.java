@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import ua.notion.musiclibrary.domain.enums.AudioFormat;
 import ua.notion.musiclibrary.domain.exception.EntityValidationException;
 import ua.notion.musiclibrary.domain.util.DomainFieldNames;
 import ua.notion.musiclibrary.domain.util.DomainFieldNames.Common;
@@ -18,17 +19,24 @@ public class Track extends BaseEntity {
   private Set<UUID> genreIds;
   private Set<UUID> artistIds;
 
+  private String filePath;
+  private String fileHash;
+  private Long fileSizeBytes;
+  private AudioFormat audioFormat;
+  private Integer bitrate;
+
   private Track() {
     super();
     this.genreIds = new HashSet<>();
     this.artistIds = new HashSet<>();
   }
 
-  public Track(String title, Duration duration, UUID albumId) {
+  public Track(String title, Duration duration, UUID albumId, String filePath) {
     this();
     setTitle(title);
     setDuration(duration);
     setAlbumId(albumId);
+    setFilePath(filePath);
 
     if (!isValid()) {
       throw new EntityValidationException(getErrors());
@@ -103,8 +111,82 @@ public class Track extends BaseEntity {
     this.albumId = albumId;
   }
 
+  public String getFilePath() {
+    return filePath;
+  }
+
+  public void setFilePath(String filePath) {
+    clearError(DomainFieldNames.Track.FILE_PATH);
+
+    if (filePath == null || filePath.isBlank()) {
+      addError(DomainFieldNames.Track.FILE_PATH, ValidationError.EMPTY_FILE_PATH.getMessage());
+    }
+
+    this.filePath = filePath;
+  }
+
+  public String getFileHash() {
+    return fileHash;
+  }
+
+  public void setFileHash(String fileHash) {
+    clearError(DomainFieldNames.Track.FILE_HASH);
+
+    if (fileHash != null && fileHash.isBlank()) {
+      addError(DomainFieldNames.Track.FILE_HASH, ValidationError.EMPTY_FILE_HASH.getMessage());
+    }
+
+    this.fileHash = fileHash;
+  }
+
+  public Long getFileSizeBytes() {
+    return fileSizeBytes;
+  }
+
+  public void setFileSizeBytes(Long fileSizeBytes) {
+    clearError(DomainFieldNames.Track.FILE_SIZE_BYTES);
+
+    if (fileSizeBytes != null && fileSizeBytes <= 0) {
+      addError(DomainFieldNames.Track.FILE_SIZE_BYTES, ValidationError.INVALID_FILE_SIZE.getMessage());
+    }
+
+    this.fileSizeBytes = fileSizeBytes;
+  }
+
+  public AudioFormat getAudioFormat() {
+    return audioFormat;
+  }
+
+  public void setAudioFormat(AudioFormat audioFormat) {
+    clearError(DomainFieldNames.Track.AUDIO_FORMAT);
+
+    if (audioFormat == null && filePath != null) {
+      addError(DomainFieldNames.Track.AUDIO_FORMAT, ValidationError.EMPTY_AUDIO_FORMAT.getMessage());
+    }
+
+    this.audioFormat = audioFormat;
+  }
+
+  public Integer getBitrate() {
+    return bitrate;
+  }
+
+  public void setBitrate(Integer bitrate) {
+    clearError(DomainFieldNames.Track.BITRATE);
+
+    if (bitrate != null && bitrate <= 0) {
+      addError(DomainFieldNames.Track.BITRATE, ValidationError.INVALID_BITRATE.getMessage());
+    }
+
+    this.bitrate = bitrate;
+  }
+
+  public boolean hasAudioFile() {
+    return filePath != null && !filePath.isBlank();
+  }
+
   @Override
   public String toString() {
-    return "Track [title=" + title + ", duration=" + duration + "]";
+    return "Track [title=" + title + ", duration=" + duration + ", hasAudioFile=" + hasAudioFile() + "]";
   }
 }

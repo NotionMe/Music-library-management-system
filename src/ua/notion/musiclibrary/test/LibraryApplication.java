@@ -75,9 +75,9 @@ public class LibraryApplication {
         if (context.users().count() == 0) {
             for (int i = 0; i < 5; i++) {
                 User user = new User(
-                        faker.name().username(),
+                        "testuser" + i,
                         faker.internet().emailAddress(),
-                        faker.internet().password(),
+                        "StrongPass123!",
                         i == 0 ? Role.ADMIN : Role.USER);
                 context.registerNew(user);
             }
@@ -101,7 +101,7 @@ public class LibraryApplication {
         if (context.genres().count() == 0) {
             for (int i = 0; i < 5; i++) {
                 context.registerNew(new Genre(faker.music().genre()));
-                
+
             }
             System.out.println("Зареєстровано нові жанри.");
         }
@@ -184,10 +184,13 @@ public class LibraryApplication {
             if (!albums.isEmpty() && !genres.isEmpty() && !artists.isEmpty()) {
                 for (Album album : albums) {
                     for (int i = 0; i < 5; i++) {
+                        String fakeFilePath = String.format("data/audio/%s.mp3",
+                                faker.internet().uuid());
                         Track track = new Track(
                                 faker.expression("#{music.genre} Track #{code.asin}"),
                                 Duration.ofSeconds(faker.random().nextInt(120, 300)),
-                                album.getID());
+                                album.getID(),
+                                fakeFilePath);
                         track.addGenre(genres.get(faker.random().nextInt(genres.size())).getID());
                         track.addArtist(artists.get(faker.random().nextInt(artists.size())).getID());
                         context.registerNew(track);
