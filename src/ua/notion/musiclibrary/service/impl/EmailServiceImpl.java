@@ -18,7 +18,7 @@ public class EmailServiceImpl implements EmailService {
     private final String password;
     private final Properties properties;
     private final Session session;
-    private final String from = "hagami16@gmail.com"; //TODO: Поміняти на сервісну почту!!!
+    private final String from = "hagami16@gmail.com"; // TODO: Поміняти на сервісну почту!!!
 
     private final String host = "smtp.gmail.com";
 
@@ -51,7 +51,6 @@ public class EmailServiceImpl implements EmailService {
             message.setText(messageForUser);
 
             Transport.send(message);
-            System.out.println("Код " + randomCode + " успішно відправлено на " + toAddress);
         } catch (MessagingException mex) {
             System.err.println("Помилка відправлення: " + mex.getMessage());
         }
