@@ -1,7 +1,9 @@
 package ua.notion.musiclibrary.mapper;
 
 import java.time.Duration;
+import java.time.Duration;
 
+import ua.notion.musiclibrary.domain.enums.PublicationStatus;
 import ua.notion.musiclibrary.domain.impl.Track;
 import ua.notion.musiclibrary.dto.track.TrackCreateDto;
 import ua.notion.musiclibrary.dto.track.TrackDto;
@@ -25,6 +27,9 @@ public final class TrackMapper {
         if (dto.artistIds() != null) {
             dto.artistIds().forEach(track::addArtist);
         }
+
+        track.setPublicationStatus(PublicationStatus.PUBLISHED);
+        track.setUploadedBy(dto.uploadedBy());
 
         return track;
     }

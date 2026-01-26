@@ -11,9 +11,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HexFormat;
 import java.util.Optional;
 
-import com.password4j.Hash;
-import com.password4j.Password;
-
 import ua.notion.musiclibrary.domain.enums.AudioFormat;
 import ua.notion.musiclibrary.domain.valueobject.AudioMetadata;
 
@@ -80,8 +77,22 @@ public class FileStorageService {
     }
 
     private String calculateFileHash(File file) throws IOException {
-        Hash hash = Password.hash(file.getName()).withMessageDigest();
-        return hash.getResult();
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+
+            try (var fis = new java.io.FileInputStream(file)) {
+                byte[] buffer = new byte[8192];
+                int bytesRead;
+
+                while ((bytesRead = fis.read(buffer)) != -1) {
+                    digest.update(buffer, 0, bytesRead);
+                }
+            }
+
+            return HexFormat.of().formatHex(digest.digest());
+        } catch (NoSuchAlgorithmException e) {
+            throw new IOException("SHA-256 algorithm not available", e);
+        }
     }
 
     private AudioFormat detectAudioFormat(File file) throws IOException {

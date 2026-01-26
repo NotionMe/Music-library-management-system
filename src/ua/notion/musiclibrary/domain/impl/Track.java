@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import ua.notion.musiclibrary.domain.enums.AudioFormat;
+import ua.notion.musiclibrary.domain.enums.PublicationStatus;
 import ua.notion.musiclibrary.domain.exception.EntityValidationException;
 import ua.notion.musiclibrary.domain.util.DomainFieldNames;
 import ua.notion.musiclibrary.domain.util.DomainFieldNames.Common;
@@ -24,6 +25,9 @@ public class Track extends BaseEntity {
   private Long fileSizeBytes;
   private AudioFormat audioFormat;
   private Integer bitrate;
+  private UUID uploadedBy;
+  private PublicationStatus publicationStatus;
+  private String rejectionReason;
 
   private Track() {
     super();
@@ -179,6 +183,30 @@ public class Track extends BaseEntity {
     }
 
     this.bitrate = bitrate;
+  }
+
+  public UUID getUploadedBy() {
+    return uploadedBy;
+  }
+
+  public void setUploadedBy(UUID uploadedBy) {
+    this.uploadedBy = uploadedBy;
+  }
+
+  public PublicationStatus getPublicationStatus() {
+    return publicationStatus;
+  }
+
+  public void setPublicationStatus(PublicationStatus publicationStatus) {
+    this.publicationStatus = publicationStatus;
+  }
+
+  public String getRejectionReason() {
+    return rejectionReason;
+  }
+
+  public void setRejectionReason(String rejectionReason) {
+    this.rejectionReason = rejectionReason;
   }
 
   public boolean hasAudioFile() {

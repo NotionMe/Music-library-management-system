@@ -5,10 +5,11 @@ import java.util.Set;
 import java.util.UUID;
 
 public record TrackCreateDto(
-                String title,
-                Duration duration,
-                UUID albumId,
-                Set<UUID> genreIds,
-                Set<UUID> artistIds,
-                String audioFilePath) {
+        String title,
+        Duration duration,
+        UUID albumId,
+        Set<UUID> genreIds,
+        Set<UUID> artistIds,
+        String audioFilePath,
+        UUID uploadedBy) {
 }
