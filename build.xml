@@ -42,7 +42,6 @@
     <target name="run" depends="compile" description="Запускає додаток">
         <echo message="Запуск ${main.class}..."/>
         <java classname="${main.class}" fork="true">
-            <jvmarg value="--add-opens=java.base/java.time=ALL-UNNAMED"/>
             <classpath refid="classpath"/>
         </java>
     </target>

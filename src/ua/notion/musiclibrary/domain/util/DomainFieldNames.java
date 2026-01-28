@@ -35,6 +35,11 @@ public final class DomainFieldNames {
 
   public static final class Track {
     public static final String DURATION = "duration";
+    public static final String FILE_PATH = "filePath";
+    public static final String FILE_HASH = "fileHash";
+    public static final String FILE_SIZE_BYTES = "fileSizeBytes";
+    public static final String AUDIO_FORMAT = "audioFormat";
+    public static final String BITRATE = "bitrate";
   }
 
   public static final class Genre {

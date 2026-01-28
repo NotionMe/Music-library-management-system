@@ -16,6 +16,13 @@ public enum ValidationError {
   EMPTY_GENRE("Жанр не може бути пустим!"),
   INVALID_GENRE_LENGTH("Жанр не може бути менше 1 символу та більше 30!"),
 
+  EMPTY_FILE_PATH("Шлях до файлу не може бути пустим!"),
+  EMPTY_FILE_HASH("Хеш файлу не може бути пустим!"),
+  INVALID_FILE_SIZE("Розмір файлу повинен бути більше 0!"),
+  EMPTY_AUDIO_FORMAT("Формат аудіо не може бути пустим!"),
+  INVALID_AUDIO_FORMAT("Непідтримуваний формат аудіофайлу!"),
+  INVALID_BITRATE("Бітрейт повинен бути більше 0!"),
+
   // for IDs and UUIDs
   EMPTY_USER_ID("ID користувача не може бути пустим!"),
   EMPTY_TRACK_ID("ID треку не може бути пустим!"),

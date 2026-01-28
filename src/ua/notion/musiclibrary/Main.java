@@ -1,16 +1,13 @@
 package ua.notion.musiclibrary;
 
-import ua.notion.musiclibrary.infrastructure.storage.impl.DataContext;
-import ua.notion.musiclibrary.test.LibraryApplication;
+import com.password4j.Hash;
+import com.password4j.Password;
+
+import ua.notion.musiclibrary.ui.TuiApplication;
 
 public class Main {
   public static void main(String[] args) {
-    // Отримуємо singleton контекст репозиторіїв
-    DataContext context = DataContext.getInstance();
-
-    // Створюємо застосунок з контекстом
-    LibraryApplication libraryApplication = new LibraryApplication(context);
-
-    libraryApplication.run();
+    TuiApplication application = new TuiApplication();
+    application.start();
   }
 }
